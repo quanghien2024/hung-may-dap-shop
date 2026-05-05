@@ -208,7 +208,7 @@ const ShopList = ({ onSelectAccount }) => {
   // Reset pagination khi đổi filter
   const handleFilterChange = (setter, value) => {
     setter(value);
-    setVisibleCount(8);
+    setVisibleCount(9);
   };
 
   return (
