@@ -29,21 +29,23 @@ const AccountCard = ({ account, onClick }) => {
         position: 'relative',
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
-        {/* AR Level Badge */}
-        <div style={{
-          position: 'absolute',
-          top: '10px',
-          right: '10px',
-          background: 'rgba(13, 13, 20, 0.8)',
-          padding: '5px 12px',
-          borderRadius: '20px',
-          border: '1px solid var(--genshin-gold)',
-          fontWeight: 'bold',
-          color: 'var(--genshin-gold)',
-          backdropFilter: 'blur(4px)'
-        }}>
-          AR {account.ar}
-        </div>
+        {/* Level/Rank Badge */}
+        {(account.ar || account.rank) && (
+          <div style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            background: 'rgba(13, 13, 20, 0.8)',
+            padding: '5px 12px',
+            borderRadius: '20px',
+            border: '1px solid var(--genshin-gold)',
+            fontWeight: 'bold',
+            color: 'var(--genshin-gold)',
+            backdropFilter: 'blur(4px)'
+          }}>
+            {account.game === 'genshin' ? `AR ${account.ar}` : `${account.rank}`}
+          </div>
+        )}
         
         {/* Server Badge */}
         <div style={{
@@ -72,9 +74,11 @@ const AccountCard = ({ account, onClick }) => {
           {account.description}
         </p>
 
-        {/* 5-star characters showcase */}
+        {/* Highlighted items showcase */}
         <div style={{ marginBottom: '20px' }}>
-          <div style={{ fontSize: '0.85rem', color: 'var(--genshin-gold)', marginBottom: '8px' }}>Nhân vật 5★ nổi bật:</div>
+          <div style={{ fontSize: '0.85rem', color: 'var(--genshin-gold)', marginBottom: '8px' }}>
+            {account.game === 'genshin' ? 'Nhân vật 5★ nổi bật:' : (account.game === 'lienquan' ? 'Tướng/Trang phục VIP:' : 'Súng/Vật phẩm VIP:')}
+          </div>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             {account.characters.map((char, index) => (
               <div key={index} style={{
