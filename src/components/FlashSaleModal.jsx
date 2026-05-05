@@ -15,6 +15,7 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
       game: "genshin",
       originalPrice: "5.000.000",
       salePrice: "3.500.000",
+      numericPrice: 3500000,
       description: "Raiden C2 + Trấn. Deal độc quyền duy nhất hôm nay!",
       image: "https://enka.network/ui/UI_Gacha_AvatarImg_Shougun.png",
       tag: "CỰC HIẾM"
@@ -25,6 +26,7 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
       game: "lienquan",
       originalPrice: "2.500.000",
       salePrice: "1.200.000",
+      numericPrice: 1200000,
       description: "Full Skin SSS Violet + Nakroth Lôi Quang.",
       image: "https://enka.network/ui/UI_Gacha_AvatarImg_Yelan.png",
       tag: "-50%"
@@ -35,8 +37,9 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
       game: "freefire",
       originalPrice: "1.800.000",
       salePrice: "900.000",
+      numericPrice: 900000,
       description: "AK Rồng Xanh Lv Max + Set đồ Hip Hop cũ.",
-      image: "https://enka.network/ui/UI_Gacha_AvatarImg_Alhaitham.png",
+      image: "https://enka.network/ui/UI_Gacha_AvatarImg_Xiao.png",
       tag: "HÀNG CỔ"
     }
   ];
@@ -122,7 +125,15 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
               transition: 'transform 0.3s ease'
             }}>
               <div style={{ height: '180px', position: 'relative' }}>
-                <img src={deal.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img 
+                  src={deal.image} 
+                  alt="" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  onError={(e) => {
+                    e.target.onerror = null; 
+                    e.target.src = "https://enka.network/ui/UI_Gacha_AvatarImg_Kazuha.png";
+                  }}
+                />
                 <div style={{
                   position: 'absolute', top: '10px', left: '10px',
                   background: '#ff4d4f', color: 'white', padding: '4px 10px',

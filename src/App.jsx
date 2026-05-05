@@ -238,8 +238,14 @@ function App() {
         isOpen={isFlashSaleOpen} 
         onClose={() => setIsFlashSaleOpen(false)} 
         onSelectAccount={(acc) => {
-          setSelectedAccount(acc);
-          setIsFlashSaleOpen(false);
+          if (!currentUser) {
+            setIsFlashSaleOpen(false);
+            setIsAuthOpen(true);
+          } else {
+            setCheckoutItems([acc]);
+            setIsFlashSaleOpen(false);
+            setIsCheckoutOpen(true);
+          }
         }} 
       />
 

@@ -14,11 +14,17 @@ const Hero = ({ onOpenFlashSale }) => {
       background: 'url(/hero-bg.png) no-repeat center center',
       backgroundSize: 'cover',
     }}>
-      {/* Dark Overlay for better text readability */}
+      {/* Dark Overlay - Multi-layered for maximum readability */}
       <div style={{
         position: 'absolute',
         top: 0, left: 0, width: '100%', height: '100%',
-        background: 'linear-gradient(180deg, rgba(13, 13, 20, 0.4) 0%, rgba(13, 13, 20, 0.8) 100%)',
+        background: 'linear-gradient(to bottom, rgba(13, 13, 20, 0.7) 0%, rgba(13, 13, 20, 0.4) 50%, rgba(13, 13, 20, 0.9) 100%)',
+        zIndex: 1
+      }}></div>
+      <div style={{
+        position: 'absolute',
+        top: 0, left: 0, width: '100%', height: '100%',
+        background: 'radial-gradient(circle at center, transparent 0%, rgba(13, 13, 20, 0.6) 100%)',
         zIndex: 1
       }}></div>
 
