@@ -45,28 +45,32 @@ function App() {
         audioRef.current.play()
           .then(() => {
             console.log("Audio unlocked and playing");
-            // Once successfully playing, we can remove the listeners
             removeListeners();
           })
-          .catch(err => console.log("Autoplay still blocked, waiting for more interaction:", err));
+          .catch(err => {
+            // If failed, we just wait for the next interaction
+            console.log("Autoplay blocked, waiting for interaction...");
+          });
       }
     };
 
     const removeListeners = () => {
       window.removeEventListener('click', unlockAudio);
+      window.removeEventListener('mousemove', unlockAudio);
       window.removeEventListener('touchstart', unlockAudio);
-      window.removeEventListener('touchend', unlockAudio);
-      window.removeEventListener('touchmove', unlockAudio);
-      window.removeEventListener('pointerdown', unlockAudio);
       window.removeEventListener('scroll', unlockAudio);
+      window.removeEventListener('keydown', unlockAudio);
     };
 
+    // Attempt to play immediately on mount (works on some Desktop browsers if MEI is high)
+    unlockAudio();
+
+    // Add listeners for any possible interaction
     window.addEventListener('click', unlockAudio);
+    window.addEventListener('mousemove', unlockAudio);
     window.addEventListener('touchstart', unlockAudio);
-    window.addEventListener('touchend', unlockAudio);
-    window.addEventListener('touchmove', unlockAudio);
-    window.addEventListener('pointerdown', unlockAudio);
     window.addEventListener('scroll', unlockAudio);
+    window.addEventListener('keydown', unlockAudio);
 
     return () => {
       unsubscribe();
