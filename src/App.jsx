@@ -170,7 +170,7 @@ function App() {
         </video>
         <div className="splash-content animate-fade-in">
           <div className="splash-logo-container">
-            <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGgxN2hiamR3d2sweWFrdGd4ODZrbWQ0YzUyZXpwdjB4cnllbTVoOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dcdk4SfbaV8CnwnlKl/giphy.gif" alt="Paimon" className="splash-logo-img" />
+            <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa294ZzQ1bTZqZjVoOW9ka29rZGx6Z3k4aTRpYm40cTdjYWZ2aWdmeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/s8VqauGTto4K3o3ODg/giphy.gif" alt="Paimon" className="splash-logo-img" />
           </div>
           <h1 className="splash-title text-gradient-gold">Hưng Máy Dập</h1>
           <p className="splash-subtitle">GIAN HÀNG TÀI KHOẢN GENSHIN IMPACT UY TÍN</p>
