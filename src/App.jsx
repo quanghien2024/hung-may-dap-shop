@@ -111,6 +111,8 @@ function App() {
         .then(() => setIsMuted(false))
         .catch(e => console.log("Play error on enter:", e));
     }
+    // Cuộn lên đầu trang (nơi có phần Hero) một cách mượt mà
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleLogin = (user) => {
