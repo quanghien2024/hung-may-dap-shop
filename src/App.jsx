@@ -170,7 +170,7 @@ function App() {
         </video>
         <div className="splash-content animate-fade-in">
           <div className="splash-logo-container">
-            <div className="splash-logo"></div>
+            <img src="/intro-logo.png" alt="Logo" className="splash-logo-img" />
           </div>
           <h1 className="splash-title text-gradient-gold">Hưng Máy Dập</h1>
           <p className="splash-subtitle">GIAN HÀNG TÀI KHOẢN GENSHIN IMPACT UY TÍN</p>

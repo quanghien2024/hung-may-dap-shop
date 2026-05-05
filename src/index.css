@@ -284,19 +284,18 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 40px;
 }
 
-.splash-logo {
-  width: 120px;
-  height: 120px;
-  background: var(--genshin-gold);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+.splash-logo-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
   margin: 0 auto;
-  animation: splash-float 3s ease-in-out infinite;
-  box-shadow: 0 0 50px rgba(229, 192, 123, 0.3);
+  animation: splash-pulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(229, 192, 123, 0.5));
 }
 
-@keyframes splash-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
+@keyframes splash-pulse {
+  0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 20px rgba(229, 192, 123, 0.5)); }
+  50% { transform: scale(1.1) rotate(5deg); filter: drop-shadow(0 0 40px rgba(229, 192, 123, 0.8)); }
 }
 
 .splash-title {
@@ -373,8 +372,8 @@ h1, h2, h3, h4, h5, h6 {
     padding: 14px 32px;
     font-size: 0.9rem;
   }
-  .splash-logo {
-    width: 80px;
-    height: 80px;
+  .splash-logo-img {
+    width: 120px;
+    height: 120px;
   }
 }
