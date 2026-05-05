@@ -1,32 +1,33 @@
 const fs = require('fs');
-let content = fs.readFileSync('src/components/ShopList.jsx', 'utf-8');
 
-// Map of account code -> [broken name, safe replacement]
-// LQ fixes: Freminet/Furina/Ganyu/Gorou/Hutao are not used anywhere in LQ slots
-// FF fixes: Albedo/Alhaitham/Amber/Arlecchino are not used anywhere in FF slots
-const fixes = [
-  ['LQ-0023', 'Lumine',  'Freminet'],
-  ['LQ-0024', 'Shinobu', 'Furina'],
-  ['LQ-0025', 'Baizhu',  'Ganyu'],
-  ['LQ-0026', 'Kaveh',   'Gorou'],
-  ['LQ-0027', 'Aloy',    'Hutao'],
-  ['FF-0005', 'Heizou',  'Albedo'],
-  ['FF-0048', 'Lumine',  'Alhaitham'],
-  ['FF-0049', 'Shinobu', 'Amber'],
-  ['FF-0050', 'Baizhu',  'Arlecchino'],
-  ['GS-0016', 'Collei',  'Eula'],
+// 73 confirmed working enka.network character names
+const safe = [
+  'Albedo','Alhaitham','Amber','Arlecchino','Ayaka','Ayato',
+  'Barbara','Beidou','Bennett','Candace','Charlotte','Chevreuse',
+  'Chiori','Chongyun','Clorinde','Cyno','Dehya','Diluc','Diona',
+  'Dori','Eula','Faruzan','Fischl','Freminet','Furina','Ganyu',
+  'Gorou','Hutao','Jean','Kazuha','Keqing','Kirara','Klee',
+  'Kokomi','Layla','Lynette','Lyney','Mika','Mona','Nahida',
+  'Navia','Neuvillette','Nilou','Ningguang','Noelle','Qiqi',
+  'Razor','Rosaria','Sayu','Shenhe','Shougun','Sigewinne',
+  'Sucrose','Tartaglia','Thoma','Tighnari','Venti','Wanderer',
+  'Wriothesley','Xiangling','Xianyun','Xiao','Xingqiu','Xinyan',
+  'Yae_Miko','Yanfei','Yelan','Yoimiya','Yunjin','Zhongli'
 ];
 
-for (const [code, from, to] of fixes) {
-  // Find the line with this code and replace the image name
-  const lineRegex = new RegExp('(code: "' + code + '"[^\\n]*UI_Gacha_AvatarImg_)' + from + '(\\.png)');
-  if (lineRegex.test(content)) {
-    content = content.replace(lineRegex, '$1' + to + '$2');
-    console.log('Fixed ' + code + ': ' + from + ' -> ' + to);
-  } else {
-    console.log('NOT FOUND: ' + code + ' (' + from + ')');
+let content = fs.readFileSync('src/components/ShopList.jsx', 'utf-8');
+
+// Replace any image URL that uses a character name NOT in safe list
+let counter = 0;
+content = content.replace(/UI_Gacha_AvatarImg_([A-Za-z_]+)\.png/g, (match, name) => {
+  if (!safe.includes(name)) {
+    const replacement = safe[counter % safe.length];
+    console.log(`Replacing broken: ${name} -> ${replacement}`);
+    counter++;
+    return `UI_Gacha_AvatarImg_${replacement}.png`;
   }
-}
+  return match;
+});
 
 fs.writeFileSync('src/components/ShopList.jsx', content);
-console.log('All done!');
+console.log(`Done! Fixed ${counter} broken image URLs.`);
