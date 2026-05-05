@@ -179,7 +179,7 @@ const ShopList = ({ onSelectAccount }) => {
           justifyContent: 'center'
         }}>
           {displayedAccounts.map((account) => (
-            <div key={account.id} className="animate-slide-up" style={{ display: 'flex', justifyContent: 'center' }}>
+            <div key={account.id} className="animate-slide-up" style={{ height: '100%' }}>
               <AccountCard account={account} onClick={() => onSelectAccount(account)} />
             </div>
           ))}

@@ -6,7 +6,10 @@ const AccountCard = ({ account, onClick }) => {
       overflow: 'hidden',
       transition: 'all 0.3s ease',
       cursor: 'pointer',
-      position: 'relative'
+      position: 'relative',
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column'
     }}
     onClick={onClick}
     onMouseOver={e => {
@@ -64,7 +67,7 @@ const AccountCard = ({ account, onClick }) => {
         </div>
       </div>
 
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flex: 1 }}>
         <h3 style={{ marginBottom: '10px', fontSize: '1.2rem', display: 'flex', justifyContent: 'space-between' }}>
           <span>{account.code}</span>
           <span className="text-gradient-gold">{account.price}đ</span>
@@ -117,9 +120,11 @@ const AccountCard = ({ account, onClick }) => {
           </div>
         </div>
 
-        <button className="btn-primary" style={{ width: '100%' }}>
-          Xem Chi Tiết
-        </button>
+        <div style={{ marginTop: 'auto' }}>
+          <button className="btn-primary" style={{ width: '100%' }}>
+            Xem Chi Tiết
+          </button>
+        </div>
       </div>
     </div>
   );
