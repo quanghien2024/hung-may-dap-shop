@@ -22,6 +22,7 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [checkoutItems, setCheckoutItems] = useState([]);
   const [isMuted, setIsMuted] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -62,21 +63,29 @@ function App() {
       window.removeEventListener('keydown', unlockAudio);
     };
 
-    // Attempt to play immediately on mount (works on some Desktop browsers if MEI is high)
-    unlockAudio();
+    // Attempt to play on mount (only works if already interacted or PWA)
+    if (hasEntered) {
+      unlockAudio();
+    }
 
-    // Add listeners for any possible interaction
+    // Lock body scroll when splash is active
+    if (!hasEntered) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Fallback listeners
     window.addEventListener('click', unlockAudio);
-    window.addEventListener('mousemove', unlockAudio);
     window.addEventListener('touchstart', unlockAudio);
-    window.addEventListener('scroll', unlockAudio);
-    window.addEventListener('keydown', unlockAudio);
 
     return () => {
       unsubscribe();
-      removeListeners();
+      window.removeEventListener('click', unlockAudio);
+      window.removeEventListener('touchstart', unlockAudio);
+      document.body.style.overflow = 'unset';
     };
-  }, [isMuted]); // Re-run if isMuted changes so we can try playing again if user manually unmutes
+  }, [isMuted, hasEntered]);
 
   const toggleMusic = () => {
     const audio = audioRef.current;
@@ -89,6 +98,16 @@ function App() {
     } else {
       audio.pause();
       setIsMuted(true);
+    }
+  };
+
+  const handleEnter = () => {
+    setHasEntered(true);
+    if (audioRef.current) {
+      audioRef.current.volume = 1.0;
+      audioRef.current.play()
+        .then(() => setIsMuted(false))
+        .catch(e => console.log("Play error on enter:", e));
     }
   };
 
@@ -144,6 +163,21 @@ function App() {
 
   return (
     <div className="App" style={{ position: 'relative' }}>
+      {/* Splash Screen */}
+      <div className={`splash-overlay ${hasEntered ? 'fade-out' : ''}`}>
+        <video autoPlay muted loop playsInline className="splash-bg-video">
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-night-sky-with-stars-and-a-bright-moon-40400-large.mp4" type="video/mp4" />
+        </video>
+        <div className="splash-content animate-fade-in">
+          <div className="splash-logo-container">
+            <div className="splash-logo"></div>
+          </div>
+          <h1 className="splash-title text-gradient-gold">Hưng Máy Dập</h1>
+          <p className="splash-subtitle">GIAN HÀNG TÀI KHOẢN GENSHIN IMPACT UY TÍN</p>
+          <button className="btn-enter" onClick={handleEnter}>Khám Phá Ngay</button>
+        </div>
+      </div>
+
       {/* Dynamic Background */}
       {/* Dynamic Background */}
       <video autoPlay muted loop playsInline className="video-bg">

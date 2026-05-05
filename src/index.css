@@ -252,7 +252,129 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateY(110vh) translateX(20px); }
 }
 
+/* Splash Screen Styles */
+.splash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0d0d14;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+.splash-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.1);
+}
 
+.splash-content {
+  text-align: center;
+  z-index: 100001;
+}
 
+.splash-logo-container {
+  position: relative;
+  margin-bottom: 40px;
+}
 
+.splash-logo {
+  width: 120px;
+  height: 120px;
+  background: var(--genshin-gold);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  margin: 0 auto;
+  animation: splash-float 3s ease-in-out infinite;
+  box-shadow: 0 0 50px rgba(229, 192, 123, 0.3);
+}
+
+@keyframes splash-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+.splash-title {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  letter-spacing: 4px;
+}
+
+.splash-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+.btn-enter {
+  background: linear-gradient(135deg, var(--genshin-gold), #d4af37);
+  color: var(--genshin-darker);
+  font-weight: 700;
+  padding: 16px 48px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 20px rgba(229, 192, 123, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-enter:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 0 40px rgba(229, 192, 123, 0.6);
+}
+
+.btn-enter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: 0.5s;
+}
+
+.btn-enter:hover::before {
+  left: 100%;
+}
+
+.splash-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  .splash-title {
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+  }
+  .splash-subtitle {
+    font-size: 0.8rem;
+    padding: 0 20px;
+  }
+  .btn-enter {
+    padding: 14px 32px;
+    font-size: 0.9rem;
+  }
+  .splash-logo {
+    width: 80px;
+    height: 80px;
+  }
+}
