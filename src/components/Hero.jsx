@@ -115,7 +115,18 @@ const Hero = ({ onOpenFlashSale }) => {
           .hero-title { font-size: 2.8rem !important; }
           .hero-subtitle { font-size: 1.1rem !important; margin-bottom: 40px !important; }
           .hero-stats { grid-template-columns: 1fr !important; gap: 20px !important; }
-          .hero-buttons { flex-direction: column; width: 100%; max-width: 280px; margin: 0 auto; }
+          .hero-buttons { 
+            flex-direction: column; 
+            width: 100%; 
+            max-width: 280px; 
+            margin: 0 auto;
+            align-items: center;
+          }
+          .hero-buttons > * {
+            width: 100% !important;
+            text-align: center;
+            justify-content: center;
+          }
         }
       `}</style>
     </section>

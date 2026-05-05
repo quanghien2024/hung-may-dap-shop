@@ -301,11 +301,12 @@ const ShopList = ({ onSelectAccount }) => {
         </div>
 
         {/* Grid Layout */}
-        <div style={{ 
+        <div className="shop-grid" style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
           gap: '30px',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          justifyItems: 'center'
         }}>
           {displayedAccounts.map((account) => (
             <div key={account.id} className="animate-slide-up" style={{ height: '100%' }}>
