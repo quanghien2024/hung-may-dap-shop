@@ -23,10 +23,11 @@ const Navbar = ({ currentUser, onOpenAuth, onLogout, onOpenSupport, onOpenCart, 
     }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
-          <div style={{
-            width: '24px', height: '24px', background: 'var(--genshin-gold)',
-            clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
-          }}></div>
+          <img 
+            src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa294ZzQ1bTZqZjVoOW9ka29rZGx6Z3k4aTRpYm40cTdjYWZ2aWdmeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/s8VqauGTto4K3o3ODg/giphy.gif" 
+            alt="Logo" 
+            style={{ width: '40px', height: '40px', objectFit: 'contain', filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.3))' }} 
+          />
           <h2 className="text-gradient-gold" style={{ margin: 0, fontSize: '1.2rem' }}>Hưng Máy Dập</h2>
         </div>
         

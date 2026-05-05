@@ -173,7 +173,7 @@ function App() {
             <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExa294ZzQ1bTZqZjVoOW9ka29rZGx6Z3k4aTRpYm40cTdjYWZ2aWdmeiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/s8VqauGTto4K3o3ODg/giphy.gif" alt="Paimon" className="splash-logo-img" />
           </div>
           <h1 className="splash-title text-gradient-gold">Hưng Máy Dập</h1>
-          <p className="splash-subtitle">GIAN HÀNG TÀI KHOẢN GENSHIN IMPACT UY TÍN</p>
+          <p className="splash-subtitle">GIAN HÀNG TÀI KHOẢN GAME UY TÍN</p>
           <button className="btn-enter" onClick={handleEnter}>Khám Phá Ngay</button>
         </div>
       </div>
@@ -186,12 +186,12 @@ function App() {
       <div className="bg-overlay" style={{ background: 'rgba(13, 13, 20, 0.6)' }}></div>
 
       {/* Background Music - Đoạn Tuyệt Nàng Đi Remix */}
-      <audio 
-        ref={audioRef} 
-        loop 
+      <audio
+        ref={audioRef}
+        loop
         autoPlay
         preload="auto"
-        src="/backgroundmusic.mp3" 
+        src="/backgroundmusic.mp3"
       ></audio>
 
 
@@ -199,9 +199,9 @@ function App() {
       {/* Snowfall Effect */}
       <div className="snow-container">
         {[...Array(50)].map((_, i) => (
-          <div 
-            key={i} 
-            className="snowflake" 
+          <div
+            key={i}
+            className="snowflake"
             style={{
               left: `${Math.random() * 100}%`,
               width: `${Math.random() * 6 + 2}px`,
@@ -214,9 +214,9 @@ function App() {
         ))}
       </div>
 
-      <Navbar 
+      <Navbar
         currentUser={currentUser}
-        onOpenAuth={() => setIsAuthOpen(true)} 
+        onOpenAuth={() => setIsAuthOpen(true)}
         onLogout={handleLogout}
         onOpenSupport={() => setIsSupportOpen(true)}
         onOpenCart={() => setIsCartOpen(true)}
@@ -232,7 +232,7 @@ function App() {
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} cartItems={cartItems} onRemoveItem={handleRemoveFromCart} onCheckout={handleCheckoutCart} />
       <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} items={checkoutItems} totalAmount={checkoutTotal} />
       <PolicyModal isOpen={!!policyType} onClose={() => setPolicyType(null)} type={policyType} />
-      
+
       <footer style={{ background: 'rgba(13, 13, 20, 0.8)', padding: '40px 0', textAlign: 'center', borderTop: '1px solid var(--glass-border)', marginTop: 'auto', backdropFilter: 'blur(10px)' }}>
         <div className="container">
           <h2 className="text-gradient-gold" style={{ marginBottom: '15px' }}>Hưng Máy Dập</h2>
