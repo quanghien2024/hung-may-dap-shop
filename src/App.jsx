@@ -8,6 +8,8 @@ import AccountDetailModal from './components/AccountDetailModal';
 import CartModal from './components/CartModal';
 import CheckoutModal from './components/CheckoutModal';
 import PolicyModal from './components/PolicyModal';
+import { auth } from './firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -19,61 +21,85 @@ function App() {
   const [policyType, setPolicyType] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [checkoutItems, setCheckoutItems] = useState([]);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-      setCurrentUser(JSON.parse(savedUser));
-    }
+    // Listen for Firebase Auth state changes
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser({
+          uid: user.uid,
+          email: user.email,
+          username: user.displayName || 'Khách'
+        });
+      } else {
+        setCurrentUser(null);
+      }
+    });
 
-    // Try to play music on any interaction
-    const initAudio = () => {
-      if (audioRef.current && audioRef.current.paused) {
+    // Smart interaction unlock for Mobile/Desktop
+    const unlockAudio = () => {
+      if (audioRef.current && !isMuted) {
+        audioRef.current.volume = 1.0;
         audioRef.current.play()
           .then(() => {
-            setIsMuted(false);
-            console.log("Music started successfully");
+            console.log("Audio unlocked and playing");
+            // Once successfully playing, we can remove the listeners
+            removeListeners();
           })
-          .catch(err => console.log("Playback failed:", err));
+          .catch(err => console.log("Autoplay still blocked, waiting for more interaction:", err));
       }
     };
 
-    window.addEventListener('mousedown', initAudio);
-    window.addEventListener('touchstart', initAudio);
-    window.addEventListener('keydown', initAudio);
-    window.addEventListener('scroll', initAudio);
+    const removeListeners = () => {
+      window.removeEventListener('click', unlockAudio);
+      window.removeEventListener('touchstart', unlockAudio);
+      window.removeEventListener('touchend', unlockAudio);
+      window.removeEventListener('touchmove', unlockAudio);
+      window.removeEventListener('pointerdown', unlockAudio);
+      window.removeEventListener('scroll', unlockAudio);
+    };
+
+    window.addEventListener('click', unlockAudio);
+    window.addEventListener('touchstart', unlockAudio);
+    window.addEventListener('touchend', unlockAudio);
+    window.addEventListener('touchmove', unlockAudio);
+    window.addEventListener('pointerdown', unlockAudio);
+    window.addEventListener('scroll', unlockAudio);
 
     return () => {
-      window.removeEventListener('mousedown', initAudio);
-      window.removeEventListener('touchstart', initAudio);
-      window.removeEventListener('keydown', initAudio);
-      window.removeEventListener('scroll', initAudio);
+      unsubscribe();
+      removeListeners();
     };
-  }, []);
+  }, [isMuted]); // Re-run if isMuted changes so we can try playing again if user manually unmutes
 
   const toggleMusic = () => {
-    if (audioRef.current) {
-      if (audioRef.current.paused) {
-        audioRef.current.play();
-        setIsMuted(false);
-      } else {
-        audioRef.current.pause();
-        setIsMuted(true);
-      }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.volume = 1.0;
+      audio.play().catch(e => console.error("Toggle play error:", e));
+      setIsMuted(false);
+    } else {
+      audio.pause();
+      setIsMuted(true);
     }
   };
 
   const handleLogin = (user) => {
     setCurrentUser(user);
-    localStorage.setItem('currentUser', JSON.stringify(user));
   };
 
-  const handleLogout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('currentUser');
-    setCartItems([]);
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setCurrentUser(null);
+      setCartItems([]);
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const handleAddToCart = (account) => {
@@ -115,37 +141,40 @@ function App() {
   return (
     <div className="App" style={{ position: 'relative' }}>
       {/* Dynamic Background */}
-      <video autoPlay muted loop className="video-bg" poster="https://images8.alphacoders.com/109/1097405.jpg">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-starry-night-sky-over-a-mountain-range-153-large.mp4" type="video/mp4" />
+      {/* Dynamic Background */}
+      <video autoPlay muted loop playsInline className="video-bg">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-night-sky-with-stars-and-a-bright-moon-40400-large.mp4" type="video/mp4" />
       </video>
-      <div className="bg-overlay"></div>
+      <div className="bg-overlay" style={{ background: 'rgba(13, 13, 20, 0.6)' }}></div>
 
-      {/* Background Music - High Energy / Phonk */}
+      {/* Background Music - Đoạn Tuyệt Nàng Đi Remix */}
       <audio 
         ref={audioRef} 
         loop 
+        autoPlay
         preload="auto"
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" 
+        src="/backgroundmusic.mp3" 
       ></audio>
 
-      {/* Music Toggle Floating Button */}
-      <button 
-        className={`music-toggle ${!isMuted ? 'playing' : ''}`} 
-        onClick={toggleMusic}
-        style={{ opacity: 0.8 }}
-      >
-        {isMuted ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>
-          </svg>
-        ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
-        )}
-      </button>
+
+
+      {/* Snowfall Effect */}
+      <div className="snow-container">
+        {[...Array(50)].map((_, i) => (
+          <div 
+            key={i} 
+            className="snowflake" 
+            style={{
+              left: `${Math.random() * 100}%`,
+              width: `${Math.random() * 6 + 2}px`,
+              height: `${Math.random() * 6 + 2}px`,
+              animationDuration: `${Math.random() * 10 + 5}s`,
+              animationDelay: `${Math.random() * 5}s`,
+              opacity: Math.random() * 0.5 + 0.3
+            }}
+          ></div>
+        ))}
+      </div>
 
       <Navbar 
         currentUser={currentUser}
@@ -154,6 +183,8 @@ function App() {
         onOpenSupport={() => setIsSupportOpen(true)}
         onOpenCart={() => setIsCartOpen(true)}
         cartCount={cartItems.length}
+        isMuted={isMuted}
+        onToggleMusic={toggleMusic}
       />
       <Hero />
       <ShopList onSelectAccount={setSelectedAccount} />

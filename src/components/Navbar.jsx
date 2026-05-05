@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Navbar = ({ currentUser, onOpenAuth, onLogout, onOpenSupport, onOpenCart, cartCount }) => {
+const Navbar = ({ currentUser, onOpenAuth, onLogout, onOpenSupport, onOpenCart, cartCount, isMuted, onToggleMusic }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -34,6 +34,9 @@ const Navbar = ({ currentUser, onOpenAuth, onLogout, onOpenSupport, onOpenCart, 
           <a href="#" style={{ color: 'var(--text-main)', textDecoration: 'none' }}>Trang Chủ</a>
           <a href="#shop" style={{ color: 'var(--text-main)', textDecoration: 'none' }}>Cửa Hàng</a>
           <a href="#" onClick={(e) => { e.preventDefault(); onOpenSupport(); }} style={{ color: 'var(--text-main)', textDecoration: 'none' }}>Hỗ Trợ</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); onToggleMusic(); }} style={{ color: 'var(--genshin-gold)', textDecoration: 'none', fontWeight: 'bold' }}>
+            {isMuted ? 'Bật Nhạc' : 'Tắt Nhạc'}
+          </a>
           
           {currentUser && (
             <div onClick={onOpenCart} style={{ position: 'relative', cursor: 'pointer', marginLeft: '10px' }}>
@@ -86,6 +89,9 @@ const Navbar = ({ currentUser, onOpenAuth, onLogout, onOpenSupport, onOpenCart, 
         }}>
           <a href="#" onClick={() => setIsMenuOpen(false)} style={{ color: 'white', textDecoration: 'none' }}>Trang Chủ</a>
           <a href="#shop" onClick={() => setIsMenuOpen(false)} style={{ color: 'white', textDecoration: 'none' }}>Cửa Hàng</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); onToggleMusic(); setIsMenuOpen(false); }} style={{ color: 'var(--genshin-gold)', textDecoration: 'none', fontWeight: 'bold' }}>
+            {isMuted ? 'Bật Nhạc' : 'Tắt Nhạc'}
+          </a>
           {currentUser ? (
             <>
               <span style={{ color: 'var(--genshin-gold)' }}>{currentUser.username}</span>
