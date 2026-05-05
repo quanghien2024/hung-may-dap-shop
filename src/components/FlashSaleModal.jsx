@@ -90,21 +90,21 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
           fontSize: '1.5rem', cursor: 'pointer', opacity: 0.7
         }}>&times;</button>
 
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-          <h2 className="text-gradient-gold" style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🔥 SIÊU DEAL GIỜ VÀNG 🔥</h2>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <h2 className="text-gradient-gold flash-sale-title" style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🔥 SIÊU DEAL GIỜ VÀNG 🔥</h2>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
             {[timeLeft.hours, timeLeft.minutes, timeLeft.seconds].map((val, i) => (
               <div key={i} style={{
                 background: 'rgba(229, 192, 123, 0.1)',
                 border: '1px solid var(--genshin-gold)',
                 borderRadius: '8px',
-                padding: '10px 15px',
-                minWidth: '60px'
+                padding: '8px 12px',
+                minWidth: '55px'
               }}>
-                <span style={{ fontSize: '1.5rem', color: 'var(--genshin-gold)', fontWeight: 'bold' }}>
+                <span style={{ fontSize: '1.2rem', color: 'var(--genshin-gold)', fontWeight: 'bold' }}>
                   {val.toString().padStart(2, '0')}
                 </span>
-                <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>
+                <p style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>
                   {i === 0 ? 'GIỜ' : i === 1 ? 'PHÚT' : 'GIÂY'}
                 </p>
               </div>
@@ -112,10 +112,10 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
           </div>
         </div>
 
-        <div style={{ 
+        <div className="flash-sale-grid" style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-          gap: '20px' 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', 
+          gap: '15px' 
         }}>
           {hotDeals.map((deal) => (
             <div key={deal.id} className="glass-panel" style={{
@@ -124,7 +124,7 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
               border: '1px solid rgba(255,255,255,0.1)',
               transition: 'transform 0.3s ease'
             }}>
-              <div style={{ height: '180px', position: 'relative' }}>
+              <div style={{ height: '160px', position: 'relative' }}>
                 <img 
                   src={deal.image} 
                   alt="" 
@@ -140,25 +140,25 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
                   borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold'
                 }}>{deal.tag}</div>
               </div>
-              <div style={{ padding: '20px' }}>
+              <div style={{ padding: '15px' }}>
                 <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', marginBottom: '5px' }}>Mã: {deal.code}</p>
-                <p style={{ fontSize: '0.9rem', marginBottom: '15px', height: '40px', overflow: 'hidden' }}>{deal.description}</p>
-                <div style={{ marginBottom: '20px' }}>
+                <p style={{ fontSize: '0.85rem', marginBottom: '10px', height: '36px', overflow: 'hidden', lineHeight: '1.4' }}>{deal.description}</p>
+                <div style={{ marginBottom: '15px' }}>
                   <span style={{ 
                     textDecoration: 'line-through', 
                     color: 'rgba(255,255,255,0.3)', 
-                    fontSize: '0.9rem',
-                    marginRight: '10px'
+                    fontSize: '0.8rem',
+                    marginRight: '8px'
                   }}>{deal.originalPrice}đ</span>
                   <span style={{ 
                     color: '#ff4d4f', 
-                    fontSize: '1.4rem', 
+                    fontSize: '1.2rem', 
                     fontWeight: 'bold' 
                   }}>{deal.salePrice}đ</span>
                 </div>
                 <button 
                   className="btn-primary" 
-                  style={{ width: '100%', background: 'linear-gradient(135deg, #ff4d4f, #ff7875)' }}
+                  style={{ width: '100%', background: 'linear-gradient(135deg, #ff4d4f, #ff7875)', padding: '10px', fontSize: '0.9rem' }}
                   onClick={() => onSelectAccount(deal)}
                 >
                   Săn Ngay
@@ -167,6 +167,13 @@ const FlashSaleModal = ({ isOpen, onClose, onSelectAccount }) => {
             </div>
           ))}
         </div>
+
+        <style>{`
+          @media (max-width: 768px) {
+            .flash-sale-title { font-size: 1.8rem !important; }
+            .flash-sale-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
       </div>
     </div>
   );
