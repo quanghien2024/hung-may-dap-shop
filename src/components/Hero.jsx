@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Hero = () => {
+const Hero = ({ onOpenFlashSale }) => {
   return (
     <section style={{
       minHeight: '100vh',
@@ -55,14 +55,17 @@ const Hero = () => {
             }}>
               Xem Kho Acc
             </a>
-            <button className="btn-secondary" style={{ 
+            <button className="btn-secondary pulse-button" onClick={onOpenFlashSale} style={{ 
               padding: '15px 40px',
               fontSize: '1.1rem',
               borderRadius: '12px',
               background: 'rgba(255, 255, 255, 0.05)',
-              backdropFilter: 'blur(5px)'
+              backdropFilter: 'blur(5px)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}>
-              Săn Deal Hot
+              <span style={{ fontSize: '1.2rem' }}>🔥</span> Săn Deal Hot
             </button>
           </div>
         </div>

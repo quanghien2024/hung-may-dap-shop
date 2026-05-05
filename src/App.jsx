@@ -8,6 +8,7 @@ import AccountDetailModal from './components/AccountDetailModal';
 import CartModal from './components/CartModal';
 import CheckoutModal from './components/CheckoutModal';
 import PolicyModal from './components/PolicyModal';
+import FlashSaleModal from './components/FlashSaleModal';
 import { auth } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
@@ -23,6 +24,7 @@ function App() {
   const [checkoutItems, setCheckoutItems] = useState([]);
   const [isMuted, setIsMuted] = useState(false);
   const [hasEntered, setHasEntered] = useState(false);
+  const [isFlashSaleOpen, setIsFlashSaleOpen] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -224,7 +226,7 @@ function App() {
         isMuted={isMuted}
         onToggleMusic={toggleMusic}
       />
-      <Hero />
+      <Hero onOpenFlashSale={() => setIsFlashSaleOpen(true)} />
       <ShopList onSelectAccount={setSelectedAccount} />
       <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} onLoginSuccess={handleLogin} />
       <SupportModal isOpen={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
@@ -232,6 +234,14 @@ function App() {
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} cartItems={cartItems} onRemoveItem={handleRemoveFromCart} onCheckout={handleCheckoutCart} />
       <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} items={checkoutItems} totalAmount={checkoutTotal} />
       <PolicyModal isOpen={!!policyType} onClose={() => setPolicyType(null)} type={policyType} />
+      <FlashSaleModal 
+        isOpen={isFlashSaleOpen} 
+        onClose={() => setIsFlashSaleOpen(false)} 
+        onSelectAccount={(acc) => {
+          setSelectedAccount(acc);
+          setIsFlashSaleOpen(false);
+        }} 
+      />
 
       <footer style={{ background: 'rgba(13, 13, 20, 0.8)', padding: '40px 0', textAlign: 'center', borderTop: '1px solid var(--glass-border)', marginTop: 'auto', backdropFilter: 'blur(10px)' }}>
         <div className="container">
