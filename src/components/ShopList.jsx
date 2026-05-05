@@ -160,7 +160,7 @@ const ShopList = ({ onSelectAccount }) => {
   const [filterPrice, setFilterPrice] = useState('all');
   const [sortOrder, setSortOrder] = useState('default');
   
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(9);
   const [loadingMore, setLoadingMore] = useState(false);
 
   // Logic Lọc & Sắp xếp
@@ -200,7 +200,7 @@ const ShopList = ({ onSelectAccount }) => {
   const handleLoadMore = () => {
     setLoadingMore(true);
     setTimeout(() => {
-      setVisibleCount(prev => prev + 8);
+      setVisibleCount(prev => prev + 9);
       setLoadingMore(false);
     }, 800);
   };

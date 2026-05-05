@@ -22,13 +22,19 @@ const AccountCard = ({ account, onClick }) => {
       e.currentTarget.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.37)';
       e.currentTarget.style.borderColor = 'var(--glass-border)';
     }}>
-      {/* Account Thumbnail */}
+      {/* Account Thumbnail - with game-specific gradient fallback */}
       <div style={{
         height: '200px',
         width: '100%',
-        backgroundImage: `url(${account.image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'top',
+        backgroundImage: `url(${account.image}), ${
+          account.game === 'genshin'
+            ? 'linear-gradient(135deg, #1a0a2e 0%, #3d1a5c 50%, #1a2a4a 100%)'
+            : account.game === 'lienquan'
+            ? 'linear-gradient(135deg, #0a1a2e 0%, #0d3b5c 50%, #0a2a1a 100%)'
+            : 'linear-gradient(135deg, #2e0a0a 0%, #5c1a0d 50%, #2e1a00 100%)'
+        }`,
+        backgroundSize: 'cover, cover',
+        backgroundPosition: 'top, center',
         position: 'relative',
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
